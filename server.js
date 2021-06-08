@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,19 +19,19 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get("/note", (req, res) => {
+app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, 'notes.html'));
 });
 
 //get our entire database
-app.get('/api/noted', (req, res) => {
+app.get('/api/notes', (req, res) => {
   return res.json(note);
 });
 
 //gets a specific character from the database
-app.get('/api/noted/:thatone', (req, res) => {
+app.get('/api/notes/:thatone', (req, res) => {
   const chosen = req.params.note;
-  const chosenNote = note.find(character => character.routeName == chosen) || false;
+  const chosenNote = note.find(thatone => thatone.routeName == chosen) || false;
   return res.json(chosenNote);
 });
 
@@ -44,4 +44,4 @@ app.post('/api/newnote', (req, res) => {
 });
 
 //start the server
-app.listen(PORT, () => console.log(`App is listening on PORT ${PORT}`));
+app.listen(PORT, () => console.log(`App is listening on https://${PORT}`));
