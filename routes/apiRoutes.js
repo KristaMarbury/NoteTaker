@@ -2,28 +2,40 @@ const router = require("express").Router();
 const store = require("../db/store.js");
 const notesData = require("../routes/htmlRoutes");
 
-//call class store in here 
 module.exports = (app) => {
-  app.get("/notes", (req, res) => res.json(notesData));
+  app.get("api/notes", (req, res) => res.json(notesData));
 
-  // GET "/api/notes" responds with all notes from the database
-  router.get("/api/notes", function (req, res) {
-    res.send("notes");
+  router.get("api/notes", function (req, res) {
+    store.getNotes().then((notes) => {
+      return res.json(notes);
+    });
   });
+
+  //change this a bit to make is save notes and then delete notes
+  // router.get("api/notes", function (req, res) {
+  //   store.getNotes().then((notes) => {
+  //     return res.json(notes);
+  //   });
+  // });
 
   // POST "/api/notes" posts the note to the database
-  router.post('/api/notes', function (req, res) {
-      res.send('Your note is safe with me!')
+  router.post("api/notes", function (req, res) {
+    res.send("Your note is safe with me!");
   });
-  // DELETE "/api/notes" deletes the note with an id equal to req.params.id
-  router.delete('/api/notes', function (req, res) {
-      res.send('And like that it is gone!')
-  });
+
+    // DELETE "/api/notes" deletes the note with an id equal to req.params.id
+    router.delete('api/notes', function (req, res) {
+        res.send('And like that it is gone!')
+    });
 };
+//call class store in here 
+
+
+
+
 
 
 //stays at the bottom
 module.exports = router;
 
-//use uuid! helps with automation
 
