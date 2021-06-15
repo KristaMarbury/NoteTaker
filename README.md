@@ -22,7 +22,7 @@ This browser application allows a user write their ideas, and save them using th
 
 # Setup/Installation Requirements
 
-The application can be accessed at 
+The application can be accessed at https://knotetaker.herokuapp.com/
 
 # Known Bugs
 
