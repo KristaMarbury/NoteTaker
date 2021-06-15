@@ -30,7 +30,7 @@ There are no known bugs at this time.
 
 # License
 
-Copyright (c) 2021 Team One to Rule Them All
+Copyright (c) 2021 
 
 # Contact Information
 
