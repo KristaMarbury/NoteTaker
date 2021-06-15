@@ -1,41 +1,25 @@
 const router = require("express").Router();
-const store = require("../db/store.js");
-const notesData = require("../routes/htmlRoutes");
-
-module.exports = (app) => {
-  app.get("api/notes", (req, res) => res.json(notesData));
-
-  router.get("api/notes", function (req, res) {
-    store.getNotes().then((notes) => {
+const store = require("../db/store");
+// GET "/api/notes" responds with all notes from the database
+router.get("/notes", (req, res) => {
+  store
+    .getNotes()
+    .then((notes) => {
       return res.json(notes);
-    });
-  });
-
-  //change this a bit to make is save notes and then delete notes
-  // router.get("api/notes", function (req, res) {
-  //   store.getNotes().then((notes) => {
-  //     return res.json(notes);
-  //   });
-  // });
-
-  // POST "/api/notes" posts the note to the database
-  router.post("api/notes", function (req, res) {
-    res.send("Your note is safe with me!");
-  });
-
-    // DELETE "/api/notes" deletes the note with an id equal to req.params.id
-    router.delete('api/notes', function (req, res) {
-        res.send('And like that it is gone!')
-    });
-};
-//call class store in here 
-
-
-
-
-
-
-//stays at the bottom
+    })
+    .catch((err) => res.status(500).json(err));
+});
+router.post("/notes", (req, res) => {
+  store
+    .addNote(req.body)
+    .then((note) => res.json(note))
+    .catch((err) => res.status(500).json(err));
+});
+// DELETE "/api/notes" deletes the note with an id equal to req.params.id
+router.delete("/notes/:id", (req, res) => {
+  store
+    .removeNote(req.params.id)
+    .then(() => res.json({ ok: true }))
+    .catch((err) => res.status(500).json(err));
+});
 module.exports = router;
-
-
